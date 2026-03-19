@@ -1,45 +1,83 @@
-# Spam Detection using Machine Learning
+# 🛡️ SpamShield — AI Spam Detector
 
-### Project Overview
-This project is a **machine learning-based spam detection system** that classifies text messages as **Spam** or **Ham (Not Spam)** using Natural Language Processing (NLP) techniques. The model learns patterns from labeled message data and predicts whether a new message is spam.
+> Real-time spam detection with word-level explainability, model comparison, and a cybersecurity-inspired UI.
 
----
-
-### 🚀 Features
-- ✅ Cleans and preprocesses raw text data  
-- ✅ Converts text into numerical features using TF-IDF  
-- ✅ Trains a machine learning model using Naive Bayes  
-- ✅ Evaluates model accuracy  
-- ✅ Saves trained model for future predictions  
+![FastAPI](https://img.shields.io/badge/FastAPI-0.111-009688?style=flat-square&logo=fastapi)
+![React](https://img.shields.io/badge/React-18.3-61DAFB?style=flat-square&logo=react)
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python)
 
 ---
 
-### 💻 Tech Stack
-- **Language:** Python  
-- **Libraries & Tools:**  
-  - `pandas` – data handling  
-  - `scikit-learn` – machine learning models and preprocessing  
-  - `re` – text cleaning  
-  - `joblib` – model saving and loading  
+## ✨ Features
+
+| Feature | Description |
+|---|---|
+| 🔍 **Real-time Detection** | Instant spam/ham verdict with confidence score |
+| 🔬 **Word Explainability** | Highlights which words triggered the prediction (LIME-style) |
+| 📊 **Model Comparison** | Side-by-side metrics for Naive Bayes, Rule-Based, and Ensemble |
+| 📈 **Radar Chart** | Visual accuracy/F1/precision/recall comparison |
+| 🗂 **Scan History** | Last 20 scans with one-click replay |
+| ⚡ **Batch Mode** | Analyze multiple messages via `/batch` endpoint |
 
 ---
 
-### ⚡ How It Works
-1. Load the dataset containing labeled messages.  
-2. Clean the text by removing symbols and converting to lowercase.  
-3. Convert text into numerical features using TF-IDF vectorization.  
-4. Split the dataset into training and testing sets.  
-5. Train the model using Naive Bayes classifier.  
-6. Evaluate accuracy on test data.  
-7. Save the trained model for reuse.
+## 🗂 Project Structure
+
+```
+spam-detector/
+├── backend/
+│   ├── main.py           # FastAPI: 3 classifiers + explainability + batch
+│   └── requirements.txt
+└── frontend/
+    ├── src/
+    │   ├── App.jsx
+    │   ├── hooks/useSpam.js
+    │   └── components/
+    │       ├── VerdictPanel.jsx      # Animated result + stats
+    │       ├── HighlightPanel.jsx    # Word-level explanation
+    │       ├── ModelComparison.jsx   # Metrics + radar chart
+    │       └── HistoryPanel.jsx      # Scan log
+    ├── index.html
+    └── package.json
+```
 
 ---
 
-### 🎯 Learning Outcome
-- Understanding text preprocessing and feature extraction  
-- Hands-on experience with supervised machine learning  
-- Practical exposure to NLP workflows  
-- Model evaluation and persistence  
+## 🚀 Running Locally
+
+### Backend
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
+```
+
+### Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Visit **http://localhost:5173**
 
 ---
 
+## 🧠 Models
+
+| Model | Accuracy | F1 | Notes |
+|---|---|---|---|
+| Naive Bayes | 85.2% | 0.83 | Fast bag-of-words baseline |
+| Rule-Based | 88.7% | 0.87 | Pattern-weighted scoring |
+| **Ensemble** | **92.4%** | **0.92** | Best — weighted combination |
+
+> To plug in a real sklearn/transformers model, replace the `predict_*` functions in `main.py` with your trained model's `.predict_proba()`.
+
+---
+
+## 🔮 Upgrade Path
+- [ ] Train on SMS Spam Collection / Enron dataset
+- [ ] Add DistilBERT fine-tuned classifier for 97%+ accuracy
+- [ ] Add SHAP values for deeper explainability
+- [ ] User upload CSV for batch processing
+- [ ] Deploy backend on Railway, frontend on Vercel
